@@ -1,0 +1,8 @@
+{
+  "name": "keystokes-challenge",
+  "version": "1.0.0",
+  "main": "index.js",
+  "repository": "https://github.com/ely-alamillo/keystokes-challenge.git",
+  "author": "Ely Alamillo <ely0013@gmail.com>",
+  "license": "MIT"
+}
