@@ -24,18 +24,16 @@ server.use(cors(corsOptions));
 // static server for build
 server.use(express.static(path.join(__dirname, 'client/build')));
 
-const connect = mongoose.connect(process.env.MONGODB_URI, {
-  useMongoClient: true
-});
+const connect = mongoose.connect(process.env.MONGODB_URI);
 
 connect
   .then(() => {
-    const { routes } = require('./api/routes/routes');
+    const { routes } = require('./api/routes/userRoutes');
     routes(server);
     server.listen(process.env.PORT);
     logger.log('connection to MongoDB successfull...');
     logger.log(`server listening on port: ${process.env.PORT}`);
   })
-  .catch(() => {
-    logger.log('error connecting to MongoDB');
+  .catch(e => {
+    logger.log('error connecting to MongoDB: ', e);
   });
