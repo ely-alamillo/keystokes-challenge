@@ -9,4 +9,6 @@ The project requirements are listed below:
   * Profile Picture
 * As a user I should be able to save the changes that I made to the above listed items.
 * As a user, I should be able to view the profiles of anyone that has submitted/created a profile through the app.
-* ## The backend should reflect changes that can be made.
+* The backend should reflect changes that can be made.
+
+P.S. For bonus points feel free to add in some sort of O-Auth component.
