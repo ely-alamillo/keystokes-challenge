@@ -1,5 +1,7 @@
 import React, { Component } from 'react';
 import AppBar from 'material-ui/AppBar';
+import FlatButton from 'material-ui/FlatButton';
+import RaisedButton from 'material-ui/RaisedButton';
 import DrawerLeft from '../Drawer/Drawer';
 
 export default class AppBarTop extends Component {
@@ -19,7 +21,11 @@ export default class AppBarTop extends Component {
   render() {
     return (
       <div>
-        <AppBar title="Title" onClick={this.toggleDrawer.bind(this)} />
+        <AppBar
+          title="Title"
+          onClick={this.toggleDrawer.bind(this)}
+          iconElementRight={<FlatButton label="Login" />}
+        />
         <DrawerLeft
           open={this.state.open}
           onToggleDrawer={this.toggleDrawer.bind(this)}
