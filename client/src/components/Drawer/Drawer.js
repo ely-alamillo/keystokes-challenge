@@ -24,6 +24,7 @@ const DrawerLeft = props => {
             </IconButton>
           }
         />
+        <MenuItem>Home</MenuItem>
         <MenuItem>All Users</MenuItem>
         <MenuItem>My Profile</MenuItem>
       </Drawer>
