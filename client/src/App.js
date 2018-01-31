@@ -10,20 +10,41 @@ class App extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      loggedIn: false
+      loggedIn: false,
+      open: false
     };
   }
+
+  toggle = () => {
+    console.log('clicked');
+    this.setState({ loggedIn: !this.state.loggedIn });
+  };
+
+  toggleDrawer = () => {
+    console.log('clicked');
+    this.setState({
+      open: !this.state.open
+    });
+  };
+
   render() {
     return (
       <MuiThemeProvider>
-        <View />
-        <Route
-          path="/"
-          exact
-          component={() => <Dashboard test="thisIsATest" />}
-        />
-        <Route path="/login" exact component={Login} />
-        <Route path="/register" exact component={Register} />
+        <div>
+          <View
+            loggedIn={this.state.loggedIn}
+            open={this.state.open}
+            toggle={this.toggle}
+            toggleDrawer={this.toggleDrawer}
+          />
+          <Route
+            path="/"
+            exact
+            component={() => <Dashboard test="thisIsATest" />}
+          />
+          <Route path="/login" exact component={Login} />
+          <Route path="/register" exact component={Register} />
+        </div>
       </MuiThemeProvider>
     );
   }
