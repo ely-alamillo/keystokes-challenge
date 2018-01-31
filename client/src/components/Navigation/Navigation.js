@@ -1,12 +1,30 @@
 import React, { Component } from 'react';
 import AppBar from 'material-ui/AppBar';
-import './App.css';
+import DrawerLeft from '../Drawer/Drawer';
 
-const Navigation = props => {
-  <AppBar
-    title="Title"
-    iconClassNameRight="muidocs-icon-navigation-expand-more"
-  />;
-};
+export default class AppBarTop extends Component {
+  constructor(props) {
+    super(props);
+    this.state = {
+      open: false
+    };
+  }
+  //Toggle function (open/close Drawer)
+  toggleDrawer() {
+    this.setState({
+      open: !this.state.open
+    });
+  }
 
-export default Navigation;
+  render() {
+    return (
+      <div>
+        <AppBar title="Title" onClick={this.toggleDrawer.bind(this)} />
+        <DrawerLeft
+          open={this.state.open}
+          onToggleDrawer={this.toggleDrawer.bind(this)}
+        />
+      </div>
+    );
+  }
+}
