@@ -4,7 +4,6 @@ const userControllers = require('../controllers/userControllers');
 const routes = server => {
   // API Routes
   const api = express.Router();
-
   api.route('/test').get(userControllers.hello);
   api.route('/register').post(userControllers.register);
   api.route('/login').post(userControllers.login);
