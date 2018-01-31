@@ -4,14 +4,17 @@ import Navigation from '../Navigation/Navigation';
 
 import './View.css';
 
-class View extends Component {
-  render() {
-    return (
-      <div>
-        <Navigation />
-      </div>
-    );
-  }
-}
+const View = props => {
+  return (
+    <div>
+      <Navigation
+        loggedIn={props.loggedIn}
+        toggle={props.toggle}
+        toggleDrawer={props.toggleDrawer}
+        open={props.open}
+      />
+    </div>
+  );
+};
 
 export default View;
