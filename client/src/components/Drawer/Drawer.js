@@ -13,11 +13,11 @@ const DrawerLeft = props => {
         docked={false}
         width={200}
         open={props.open}
-        onClick={props.onToggleDrawer}
+        onClick={props.toggleDrawer}
       >
         <AppBar
           title="Menu"
-          onClick={props.onToggleDrawer}
+          onClick={props.toggleDrawer}
           iconElementLeft={
             <IconButton>
               <NavigationClose />
