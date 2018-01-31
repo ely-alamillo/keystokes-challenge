@@ -1,15 +1,18 @@
 import React, { Component } from 'react';
-import logo from './logo.svg';
-import './App.css';
+import { Route } from 'react-router-dom';
+import View from './components/View/View';
+import Register from './components/Register/Register';
+import Login from './components/Login/Login';
+import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider';
 
 class App extends Component {
   render() {
     return (
-      <div className="App">
-        <header className="App-header">
-          <h1 className="App-title">User Dashboard</h1>
-        </header>
-      </div>
+      <MuiThemeProvider>
+        <View />
+        <Route path="/" exact component={Login} />
+        <Route path="/register" exact component={Register} />
+      </MuiThemeProvider>
     );
   }
 }
