@@ -97,7 +97,11 @@ class App extends Component {
 
   goHome = () => {
     this.props.history.push('/');
-    setTimeout(this.toggleDrawer, 1000);
+    setTimeout(this.toggleDrawer, 500);
+  };
+  goUsers = () => {
+    this.props.history.push('/users');
+    setTimeout(this.toggleDrawer, 500);
   };
 
   render() {
@@ -110,6 +114,7 @@ class App extends Component {
           toggle={this.toggle}
           toggleDrawer={this.toggleDrawer}
           goHome={this.goHome}
+          goUsers={this.goUsers}
         />
         <Route path="/" exact component={() => <Login login={this.login} />} />
         <Route path="/register" exact component={() => <Register register={this.register} />} />

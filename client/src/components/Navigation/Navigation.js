@@ -52,7 +52,7 @@ const AppBarTop = props => {
         onRightIconButtonClick={props.toggle}
         iconElementRight={props.loggedIn ? <FlatButton label="Logout" /> : <FlatButton label="Login" />}
       />
-      <DrawerLeft open={props.open} toggleDrawer={props.toggleDrawer} goHome={props.goHome} />
+      <DrawerLeft open={props.open} toggleDrawer={props.toggleDrawer} goHome={props.goHome} goUsers={props.goUsers} />
     </div>
   );
 };

@@ -14,6 +14,7 @@ const View = props => {
         toggleDrawer={props.toggleDrawer}
         open={props.open}
         goHome={props.goHome}
+        goUsers={props.goUsers}
       />
     </div>
   );

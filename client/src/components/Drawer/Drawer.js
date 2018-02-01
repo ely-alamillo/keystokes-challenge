@@ -21,7 +21,7 @@ const DrawerLeft = props => {
           }
         />
         <MenuItem onClick={props.goHome}>Home</MenuItem>
-        <MenuItem>All Users</MenuItem>
+        <MenuItem onClick={props.goUsers}>All Users</MenuItem>
         <MenuItem>My Profile</MenuItem>
       </Drawer>
     </div>
