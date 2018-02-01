@@ -50,9 +50,9 @@ class App extends Component {
       .post('http://localhost:8081/api/register', user)
       .then(element => {
         const user = element.data.savedUser;
-        this.setState({ loggedIn: true, currUser: user._id });
+        console.log('register user:', user);
+        this.setState({ loggedIn: true, currUser: user._id }, () => this.props.history.push('/dashboard'));
         sessionStorage.setItem('id', user._id);
-        this.props.history.push('/dashboard');
       })
       .catch(err => {
         if (err.errorCode) {
@@ -73,13 +73,17 @@ class App extends Component {
       .post('http://localhost:8081/api/login', { email, password })
       .then(element => {
         const user = element.data;
-        this.setState({ loggedIn: true, currUser: user._id });
-        sessionStorage.setItem('id', user._id);
-        this.props.history.push('/dashboard');
+        if (user.errorCode) {
+          return this.setState({ authError: user.message });
+        }
+        this.setState({ loggedIn: true, currUser: user._id }, () => {
+          sessionStorage.setItem('id', user._id);
+          this.props.history.push('/dashboard');
+        });
       })
       .catch(err => {
         if (err.errorCode) {
-          this.setState({ firebaseError: err.message });
+          this.setState({ authError: err.message });
         } else {
           this.setState({ customError: err.message });
         }
@@ -143,7 +147,13 @@ class App extends Component {
           goUsers={this.goUsers}
           goProfile={this.goProfile}
         />
-        <Route path="/" exact component={() => <Login login={this.login} />} />
+        <Route
+          path="/"
+          exact
+          component={() => (
+            <Login login={this.login} authError={this.state.authError} customError={this.state.customError} />
+          )}
+        />
         <Route path="/register" exact component={() => <Register register={this.register} />} />
         <Route
           path="/dashboard"
