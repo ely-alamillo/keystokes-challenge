@@ -85,6 +85,26 @@ class App extends Component {
         }
       });
   };
+
+  /**
+   * Singout Method
+   */
+
+  signout = () => {
+    axios
+      .get('http://localhost:8081/api/signout')
+      .then(() => {
+        this.setState({ loggedIn: false, currUser: null }, this.props.history.push('/'));
+        sessionStorage.removeItem('id');
+      })
+      .catch(err => {
+        if (err.errorCode) {
+          this.setState({ firebaseError: err.message });
+        } else {
+          this.setState({ customError: err.message });
+        }
+      });
+  };
   /**
    * Drawer Actions
    */
@@ -103,6 +123,11 @@ class App extends Component {
     this.props.history.push('/users');
     setTimeout(this.toggleDrawer, 500);
   };
+  goProfile = () => {
+    console.log('clicked');
+    this.props.history.push('/dashboard');
+    setTimeout(this.toggleDrawer, 500);
+  };
 
   render() {
     console.log(this.context);
@@ -110,15 +135,21 @@ class App extends Component {
       <div>
         <View
           loggedIn={this.state.loggedIn}
+          signout={this.signout}
           open={this.state.open}
           toggle={this.toggle}
           toggleDrawer={this.toggleDrawer}
           goHome={this.goHome}
           goUsers={this.goUsers}
+          goProfile={this.goProfile}
         />
         <Route path="/" exact component={() => <Login login={this.login} />} />
         <Route path="/register" exact component={() => <Register register={this.register} />} />
-        <Route path="/dashboard" exact component={() => <Dashboard id={this.state.currUser} />} />
+        <Route
+          path="/dashboard"
+          exact
+          component={() => <Dashboard id={this.state.currUser} loggedIn={this.state.loggedIn} />}
+        />
         <Route path="/users" exact component={() => <UsersView />} />
       </div>
     );
