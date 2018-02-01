@@ -4,6 +4,7 @@ import RaisedButton from 'material-ui/RaisedButton';
 import TextField from 'material-ui/TextField';
 import { Link } from 'react-router-dom';
 import axios from 'axios';
+import './Login.css';
 
 class Login extends Component {
   constructor(props) {
@@ -15,7 +16,7 @@ class Login extends Component {
   }
   render() {
     return (
-      <div style={styles.container}>
+      <div className="login-container">
         <div>
           {/* <AppBar title="Register" /> */}
           <TextField
@@ -28,17 +29,21 @@ class Login extends Component {
             type="password"
             hintText="Enter your Password"
             floatingLabelText="Password"
-            onChange={(event, newValue) =>
-              this.setState({ password: newValue })
-            }
+            onChange={(event, newValue) => this.setState({ password: newValue })}
           />
           <br />
-          <RaisedButton
-            label="Submit"
-            primary={true}
-            style={styles}
-            onClick={event => this.props.login(event, this.state)}
-          />
+          {this.props.authError ? <p>user or password do not match</p> : null}
+          {this.props.customError ? <p>user or password do not match</p> : null}
+
+          <br />
+          <div className="login-button">
+            <RaisedButton
+              label="Submit"
+              primary={true}
+              className="raised-button"
+              onClick={event => this.props.login(event, this.state)}
+            />
+          </div>
           <CardText>
             Don't have an account? <Link to={'/register'}>Register</Link>
           </CardText>
@@ -47,12 +52,5 @@ class Login extends Component {
     );
   }
 }
-const styles = {
-  container: {
-    display: 'flex',
-    alignItems: 'center',
-    justifyContent: 'center'
-  },
-  button: { margin: 15 }
-};
+
 export default Login;
