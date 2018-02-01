@@ -6,7 +6,8 @@
   "author": "Ely Alamillo <ely0013@gmail.com>",
   "license": "MIT",
   "scripts": {
-    "start": "nodemon server.js"
+    "start": "nodemon server.js",
+    "heroku-postbuild": "cd client && yarn install --production[=false] && yarn install && yarn run build"
   },
   "dependencies": {
     "body-parser": "^1.18.2",
