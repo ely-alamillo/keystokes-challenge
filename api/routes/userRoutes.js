@@ -8,7 +8,8 @@ const routes = server => {
   api.route('/register').post(userControllers.register);
   api.route('/login').post(userControllers.login);
   api.route('/update').post(userControllers.update);
-  api.route('/users').post(userControllers.allUsers);
+  api.route('/users').get(userControllers.allUsers);
+  api.route('/find').post(userControllers.find);
   server.use('/api', api);
 
   // catch all for unknown routes
