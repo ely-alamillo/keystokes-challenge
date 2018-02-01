@@ -1,4 +1,6 @@
 const express = require('express');
+const multer = require('multer');
+const upload = multer({ dest: './uploads' });
 const userControllers = require('../controllers/userControllers');
 
 const routes = server => {
@@ -10,6 +12,7 @@ const routes = server => {
   api.route('/update').post(userControllers.update);
   api.route('/users').get(userControllers.allUsers);
   api.route('/find').post(userControllers.find);
+  api.route('/upload').post(upload.single('avatar'), userControllers.upload);
   server.use('/api', api);
 
   // catch all for unknown routes

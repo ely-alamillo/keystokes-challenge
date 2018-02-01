@@ -18,6 +18,13 @@ class App extends Component {
       userExpanded: false
     };
   }
+
+  componentWillMount() {
+    console.log('app will mount');
+    if (sessionStorage.getItem('id')) {
+      this.setState({ loggedIn: true });
+    }
+  }
   /**
    * View methods
    */
@@ -43,7 +50,8 @@ class App extends Component {
       .post('http://localhost:8081/api/register', user)
       .then(element => {
         const user = element.data.savedUser;
-        this.setState({ loggedIn: true, currUser: user.email });
+        this.setState({ loggedIn: true, currUser: user._id });
+        sessionStorage.setItem('id', user._id);
         this.props.history.push('/dashboard');
       })
       .catch(err => {
@@ -66,6 +74,7 @@ class App extends Component {
       .then(element => {
         const user = element.data;
         this.setState({ loggedIn: true, currUser: user._id });
+        sessionStorage.setItem('id', user._id);
         this.props.history.push('/dashboard');
       })
       .catch(err => {

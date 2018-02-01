@@ -12,13 +12,14 @@ class Dashboard extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      modalOpen: false
+      modalOpen: false,
+      imageModalOpen: false
     };
   }
-
   componentDidMount() {
     console.log('didMount');
-    const id = this.props.id;
+    const id = sessionStorage.getItem('id');
+    const self = this;
     axios
       .post('http://localhost:8081/api/find', { id })
       .then(element => {
@@ -26,7 +27,7 @@ class Dashboard extends Component {
         const firstName = user.firstName.charAt(0).toUpperCase() + user.firstName.slice(1);
         const lastName = user.lastName.charAt(0).toUpperCase() + user.lastName.slice(1);
         const fullname = `${firstName} ${lastName}`;
-        this.setState({
+        self.setState({
           firstName,
           lastName,
           fullname,
@@ -34,7 +35,9 @@ class Dashboard extends Component {
           description: user.description
         });
       })
-      .catch(err => {});
+      .catch(err => {
+        console.log('error on update');
+      });
   }
 
   openModal = () => {
@@ -44,29 +47,45 @@ class Dashboard extends Component {
   closeModal = () => {
     this.setState({ modalOpen: false });
   };
+  imageOpenModal = () => {
+    console.log('open!');
+    this.setState({ imageModalOpen: true });
+  };
+  imageCloseModal = () => {
+    this.setState({ imageModalOpen: false });
+  };
   alertUpdata = () => {
     this.closeModal();
     alert('Feature Coming soon');
   };
-  updateUser = () => {
-    let { newLastName, newFirstName, newDescription } = this.state;
+  updateUser = event => {
+    event.preventDefault();
+    let { newLastName, newFirstName, newDescription, id } = this.state;
     newFirstName = newFirstName ? newFirstName : this.state.firstName;
     newLastName = newLastName ? newLastName : this.state.lastName;
     newDescription = newDescription ? newDescription : this.state.description;
-    const updates = { firstName: newFirstName, lastName: newLastName, description: newDescription };
+    const updates = { firstName: newFirstName, lastName: newLastName, description: newDescription, id };
     axios
       .post('http://localhost:8081/api/update', updates)
       .then(element => {
-        console.log(element.data);
-        this.setState({ updated: true });
+        const { firstName, lastName, description } = element.data;
+        this.setState({ firstName, lastName, description });
       })
-      .catch(err => {});
+      .catch(err => {
+        console.log('error on update');
+      });
   };
+
+  uploadFile = () => {};
 
   render() {
     const actions = [
       <FlatButton label="Cancel" primary={true} onClick={this.closeModal} />,
-      <FlatButton label="Submit" primary={true} disabled={false} onClick={this.alertUpdata} />
+      <FlatButton label="Submit" primary={true} disabled={false} onClick={this.updateUser} />
+    ];
+    const imageActions = [
+      <FlatButton label="Cancel" primary={true} onClick={this.imageCloseModal} />,
+      <FlatButton label="Submit" primary={true} disabled={false} onClick={this.updateUser} />
     ];
 
     return (
@@ -94,6 +113,7 @@ class Dashboard extends Component {
           {/* <FlatButton label="Edit Info" /> */}
           {/* <FlatButton label="Action2" /> */}
           <RaisedButton label="Edit Profile" onClick={this.openModal} />
+          <RaisedButton label="Upload Image" onClick={this.imageOpenModal} />
           <Dialog title="Edit Profile" actions={actions} modal={true} open={this.state.modalOpen}>
             <div>
               <TextField
@@ -117,6 +137,17 @@ class Dashboard extends Component {
                 onChange={event => this.setState({ newDescription: event.target.value })}
               />
               <br />
+            </div>
+          </Dialog>
+          <Dialog title="Upload Image" actions={imageActions} modal={true} open={this.state.imageModalOpen}>
+            <div>
+              <br />
+              <form encType="multipart/form-data" onSubmit={this.uploadFile}>
+                {/* <label>Upload Image</label> */}
+                Upload Profile Image:
+                <input type="file" name="imgUploader" style={{ marginLeft: 15 }} />
+                <button type="submit">Upload File</button>
+              </form>
             </div>
           </Dialog>
         </CardActions>

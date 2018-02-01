@@ -88,4 +88,15 @@ const hello = (req, res) => {
   return res.json({ msg: 'hello from the api' });
 };
 
-module.exports = { register, hello, login, update, allUsers, find };
+const upload = (req, res) => {
+  if (req.file) {
+    console.log('uploading file');
+    const profileImg = req.file.filename;
+  } else {
+    console.log('no file uploaded');
+    const profileImg = 'noimage.jpg';
+  }
+  res.json({ upload: true });
+};
+
+module.exports = { register, hello, login, update, allUsers, find, upload };
