@@ -50,7 +50,19 @@ const login = (req, res) => {
       });
     })
     .catch(err => {
-      res.json({ errorCode: err.code, message: err.message });
+      return res.json({ errorCode: err.code, message: err.message });
+    });
+};
+
+const signout = (req, res) => {
+  firebase
+    .auth()
+    .signOut()
+    .then(() => {
+      return res.json({ message: 'signed out' });
+    })
+    .catch(err => {
+      return res.json({ errorCode: err.code, message: err.message });
     });
 };
 
@@ -99,4 +111,4 @@ const upload = (req, res) => {
   res.json({ upload: true });
 };
 
-module.exports = { register, hello, login, update, allUsers, find, upload };
+module.exports = { register, hello, login, signout, update, allUsers, find, upload };
