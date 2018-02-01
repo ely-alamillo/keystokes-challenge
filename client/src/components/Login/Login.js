@@ -37,7 +37,7 @@ class Login extends Component {
             label="Submit"
             primary={true}
             style={styles}
-            onClick={event => this.handleClick(event)}
+            onClick={event => this.props.login(event, this.state)}
           />
           <CardText>
             Don't have an account? <Link to={'/register'}>Register</Link>
