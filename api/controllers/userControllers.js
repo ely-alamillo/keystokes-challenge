@@ -76,7 +76,7 @@ const update = (req, res) => {
     if (err) {
       return sendUserError('An error occurred please try again', res);
     }
-    console.log('updated', updated);
+
     return res.json({ changed: true, updated });
   });
 };
@@ -102,10 +102,8 @@ const hello = (req, res) => {
 
 const upload = (req, res) => {
   if (req.file) {
-    console.log('uploading file');
     const profileImg = req.file.filename;
   } else {
-    console.log('no file uploaded');
     const profileImg = 'noimage.jpg';
   }
   res.json({ upload: true });
