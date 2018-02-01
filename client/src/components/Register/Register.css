@@ -1,0 +1,11 @@
+.register-container {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 75vh;
+}
+
+.register-button {
+  display: flex;
+  justify-content: flex-end;
+}

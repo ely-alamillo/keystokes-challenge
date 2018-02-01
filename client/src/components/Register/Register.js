@@ -4,6 +4,7 @@ import { Card, CardText } from 'material-ui/Card';
 import RaisedButton from 'material-ui/RaisedButton';
 import TextField from 'material-ui/TextField';
 import { Link } from 'react-router-dom';
+import './Register.css';
 
 class Register extends Component {
   constructor(props) {
@@ -18,25 +19,21 @@ class Register extends Component {
   }
   render() {
     return (
-      <div style={styles.container}>
+      <div className="register-container">
         <div>
           {/* <AppBar title="Register" /> */}
           <TextField
             hintText="Enter your First Name"
             floatingLabelText="First Name"
             value={this.state.firstName}
-            onChange={(event, newValue) =>
-              this.setState({ firstName: newValue })
-            }
+            onChange={(event, newValue) => this.setState({ firstName: newValue })}
           />
           <br />
           <TextField
             hintText="Enter your Last Name"
             floatingLabelText="Last Name"
             value={this.state.lastName}
-            onChange={(event, newValue) =>
-              this.setState({ lastName: newValue })
-            }
+            onChange={(event, newValue) => this.setState({ lastName: newValue })}
           />
           <br />
           <TextField
@@ -52,17 +49,12 @@ class Register extends Component {
             hintText="Enter your Password"
             floatingLabelText="Password"
             value={this.state.password}
-            onChange={(event, newValue) =>
-              this.setState({ password: newValue })
-            }
+            onChange={(event, newValue) => this.setState({ password: newValue })}
           />
           <br />
-          <RaisedButton
-            label="Submit"
-            primary={true}
-            style={styles}
-            onClick={event => this.props.register(event, this.state)}
-          />
+          <div className="register-button">
+            <RaisedButton label="Submit" primary={true} onClick={event => this.props.register(event, this.state)} />
+          </div>
           <CardText>
             Already have an account? <Link to={'/'}>Log in</Link>
           </CardText>
@@ -71,14 +63,5 @@ class Register extends Component {
     );
   }
 }
-
-const styles = {
-  container: {
-    display: 'flex',
-    alignItems: 'center',
-    justifyContent: 'center'
-  },
-  button: { margin: 15 }
-};
 
 export default withRouter(Register);
