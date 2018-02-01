@@ -20,3 +20,15 @@ The project requirements are listed below:
 * The backend should reflect changes that can be made.
 
 P.S. For bonus points feel free to add in some sort of O-Auth component.
+
+## workflow
+
+* Structured Mongoose Schemas for data
+* Set up database
+* Planned out routes
+* Built Backend
+* Planned out frontend pages
+* Made pages
+* Wired up backend and frontend
+* Worked out bugs, backlog of minor things
+* Added some styles
