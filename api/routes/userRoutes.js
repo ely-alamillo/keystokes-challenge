@@ -9,6 +9,7 @@ const routes = server => {
   api.route('/test').get(userControllers.hello);
   api.route('/register').post(userControllers.register);
   api.route('/login').post(userControllers.login);
+  api.route('/signout').get(userControllers.signout);
   api.route('/update').post(userControllers.update);
   api.route('/users').get(userControllers.allUsers);
   api.route('/find').post(userControllers.find);
