@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import { withRouter } from 'react-router-dom';
 import { Link } from 'react-router-dom';
 import Navigation from '../Navigation/Navigation';
 
@@ -12,9 +13,10 @@ const View = props => {
         toggle={props.toggle}
         toggleDrawer={props.toggleDrawer}
         open={props.open}
+        goHome={props.goHome}
       />
     </div>
   );
 };
 
-export default View;
+export default withRouter(View);
