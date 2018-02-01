@@ -11,10 +11,12 @@ const View = props => {
       <Navigation
         loggedIn={props.loggedIn}
         toggle={props.toggle}
+        signout={props.signout}
         toggleDrawer={props.toggleDrawer}
         open={props.open}
         goHome={props.goHome}
         goUsers={props.goUsers}
+        goProfile={props.goProfile}
       />
     </div>
   );
