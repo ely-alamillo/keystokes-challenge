@@ -12,7 +12,7 @@ class UsersView extends Component {
   }
   componentDidMount() {
     axios
-      .get('http://localhost:8081/api/users')
+      .get('https://keystokes-ely.herokuapp.com/api/users')
       .then(element => {
         this.setState({ users: element.data });
       })

@@ -1,6 +1,5 @@
 import React, { Component } from 'react';
 import { withRouter } from 'react-router-dom';
-import { Link } from 'react-router-dom';
 import { Card, CardActions, CardHeader, CardMedia, CardTitle, CardText } from 'material-ui/Card';
 import FlatButton from 'material-ui/FlatButton';
 import RaisedButton from 'material-ui/RaisedButton';
@@ -19,11 +18,10 @@ class Dashboard extends Component {
     };
   }
   componentDidMount() {
-    console.log('didMount');
     const id = sessionStorage.getItem('id');
     const self = this;
     axios
-      .post('http://localhost:8081/api/find', { id })
+      .post('https://keystokes-ely.herokuapp.com/api/find', { id })
       .then(element => {
         const { firstName, lastName, description } = element.data;
         const id = element.data._id;
@@ -42,14 +40,12 @@ class Dashboard extends Component {
   }
 
   openModal = () => {
-    console.log('open!');
     this.setState({ modalOpen: true });
   };
   closeModal = () => {
     this.setState({ modalOpen: false });
   };
   imageOpenModal = () => {
-    console.log('open!');
     this.setState({ imageModalOpen: true });
   };
   imageCloseModal = () => {
@@ -67,13 +63,12 @@ class Dashboard extends Component {
     newDescription = newDescription ? newDescription : this.state.description;
     const updates = { firstName: newFirstName, lastName: newLastName, description: newDescription, id };
     axios
-      .post('http://localhost:8081/api/update', updates)
+      .post('https://keystokes-ely.herokuapp.com/api/update', updates)
       .then(element => {
-        console.log('updated data: ', element.data);
         const { firstName, lastName, description } = element.data.updated;
         const fullname = getFullname(firstName, lastName);
         this.setState({ firstName, lastName, description, fullname }, () => {
-          console.log('setting dashboard state after upload');
+          this.closeModal();
         });
       })
       .catch(err => {
@@ -90,7 +85,7 @@ class Dashboard extends Component {
     ];
     const imageActions = [
       <FlatButton label="Cancel" primary={true} onClick={this.imageCloseModal} />,
-      <FlatButton label="Submit" primary={true} disabled={false} onClick={this.updateUser} />
+      <FlatButton label="Submit" primary={true} disabled={true} onClick={this.updateUser} />
     ];
 
     return (
@@ -99,10 +94,10 @@ class Dashboard extends Component {
           <Card>
             <CardHeader
               title={this.state.fullname}
-              subtitle="Software Engineer"
+              subtitle="Professin"
               avatar="https://srkheadshotday.com/wp-content/uploads/Paolo_Cerruti_Headshot_16H5589_Crop32-760x507.jpg"
             />
-            <CardMedia overlay={<CardTitle title="Overlay title" subtitle="Overlay subtitle" />}>
+            <CardMedia overlay={<CardTitle title="Some user selected Image" subtitle="Some subtitle" />}>
               <img
                 src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRPIuXbqryk8aqUjByEMbosKWSHdm_V-cj8RfRGVXrBc_ilepXb"
                 className="city-image"

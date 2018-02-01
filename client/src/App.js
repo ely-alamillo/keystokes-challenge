@@ -4,9 +4,7 @@ import View from './components/View/View';
 import Register from './components/Register/Register';
 import Login from './components/Login/Login';
 import Dashboard from './components/Dashboard/Dashboard';
-import Users from './components/Users/User';
 import UsersView from './components/UsersView/UsersView';
-import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider';
 import axios from 'axios';
 
 class App extends Component {
@@ -47,12 +45,14 @@ class App extends Component {
       profileImg: '/images/default.jpg'
     };
     axios
-      .post('http://localhost:8081/api/register', user)
+      .post('https://keystokes-ely.herokuapp.com/api/register', user)
       .then(element => {
         const user = element.data.savedUser;
         console.log('register user:', user);
-        this.setState({ loggedIn: true, currUser: user._id }, () => this.props.history.push('/dashboard'));
-        sessionStorage.setItem('id', user._id);
+        this.setState({ loggedIn: true, currUser: user._id }, () => {
+          sessionStorage.setItem('id', user._id);
+          this.props.history.push('/dashboard');
+        });
       })
       .catch(err => {
         if (err.errorCode) {
@@ -70,7 +70,7 @@ class App extends Component {
     console.log(password);
     event.preventDefault();
     axios
-      .post('http://localhost:8081/api/login', { email, password })
+      .post('https://keystokes-ely.herokuapp.com/api/login', { email, password })
       .then(element => {
         const user = element.data;
         if (user.errorCode) {
@@ -96,7 +96,7 @@ class App extends Component {
 
   signout = () => {
     axios
-      .get('http://localhost:8081/api/signout')
+      .get('https://keystokes-ely.herokuapp.com/api/signout')
       .then(() => {
         this.setState({ loggedIn: false, currUser: null }, this.props.history.push('/'));
         sessionStorage.removeItem('id');
