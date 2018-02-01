@@ -49,10 +49,17 @@ const AppBarTop = props => {
         title="Title"
         onTitleClick={props.toggleDrawer}
         onLeftIconButtonClick={props.toggleDrawer}
-        onRightIconButtonClick={props.toggle}
+        onRightIconButtonClick={props.signout}
         iconElementRight={props.loggedIn ? <FlatButton label="Logout" /> : <FlatButton label="Login" />}
       />
-      <DrawerLeft open={props.open} toggleDrawer={props.toggleDrawer} goHome={props.goHome} goUsers={props.goUsers} />
+      <DrawerLeft
+        open={props.open}
+        toggleDrawer={props.toggleDrawer}
+        loggedIn={props.loggedIn}
+        goHome={props.goHome}
+        goUsers={props.goUsers}
+        goProfile={props.goProfile}
+      />
     </div>
   );
 };

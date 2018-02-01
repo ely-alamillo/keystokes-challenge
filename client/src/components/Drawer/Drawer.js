@@ -22,7 +22,7 @@ const DrawerLeft = props => {
         />
         <MenuItem onClick={props.goHome}>Home</MenuItem>
         <MenuItem onClick={props.goUsers}>All Users</MenuItem>
-        <MenuItem>My Profile</MenuItem>
+        {props.loggedIn ? <MenuItem onClick={props.goProfile}>My Profile</MenuItem> : null}
       </Drawer>
     </div>
   );
