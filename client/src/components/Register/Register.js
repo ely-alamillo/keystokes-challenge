@@ -1,11 +1,9 @@
 import React, { Component } from 'react';
-import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider';
+import { withRouter } from 'react-router-dom';
 import { Card, CardText } from 'material-ui/Card';
-import AppBar from 'material-ui/AppBar';
 import RaisedButton from 'material-ui/RaisedButton';
 import TextField from 'material-ui/TextField';
 import { Link } from 'react-router-dom';
-import axios from 'axios';
 
 class Register extends Component {
   constructor(props) {
@@ -14,7 +12,8 @@ class Register extends Component {
       firstName: '',
       lastName: '',
       email: '',
-      password: ''
+      password: '',
+      username: ''
     };
   }
   render() {
@@ -25,6 +24,7 @@ class Register extends Component {
           <TextField
             hintText="Enter your First Name"
             floatingLabelText="First Name"
+            value={this.state.firstName}
             onChange={(event, newValue) =>
               this.setState({ firstName: newValue })
             }
@@ -33,6 +33,7 @@ class Register extends Component {
           <TextField
             hintText="Enter your Last Name"
             floatingLabelText="Last Name"
+            value={this.state.lastName}
             onChange={(event, newValue) =>
               this.setState({ lastName: newValue })
             }
@@ -42,6 +43,7 @@ class Register extends Component {
             hintText="Enter your Email"
             type="email"
             floatingLabelText="Email"
+            value={this.state.email}
             onChange={(event, newValue) => this.setState({ email: newValue })}
           />
           <br />
@@ -49,6 +51,7 @@ class Register extends Component {
             type="password"
             hintText="Enter your Password"
             floatingLabelText="Password"
+            value={this.state.password}
             onChange={(event, newValue) =>
               this.setState({ password: newValue })
             }
@@ -58,7 +61,7 @@ class Register extends Component {
             label="Submit"
             primary={true}
             style={styles}
-            onClick={event => this.handleClick(event)}
+            onClick={event => this.props.register(event, this.state)}
           />
           <CardText>
             Already have an account? <Link to={'/'}>Log in</Link>
@@ -68,6 +71,7 @@ class Register extends Component {
     );
   }
 }
+
 const styles = {
   container: {
     display: 'flex',
@@ -76,4 +80,5 @@ const styles = {
   },
   button: { margin: 15 }
 };
-export default Register;
+
+export default withRouter(Register);
