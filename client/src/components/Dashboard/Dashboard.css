@@ -1,0 +1,44 @@
+.dashboard-container {
+  margin-top: 5%;
+  margin-left: 5%;
+  margin-right: 5%;
+}
+.city-image {
+}
+.input-form {
+  width: 100% !important;
+}
+
+/*==================================================
+=                 Media Queries                    =
+==================================================*/
+
+/*==========  Mobile First Method  ==========*/
+
+/* Custom, iPhone Retina */
+@media only screen and (min-width: 320px) {
+}
+
+/* Extra Small Devices, Phones */
+@media only screen and (min-width: 480px) {
+}
+
+/* Small Devices, Tablets */
+@media only screen and (min-width: 768px) {
+}
+
+/* Medium Devices, Desktops */
+@media only screen and (min-width: 992px) {
+  .city-image {
+    height: 500px;
+  }
+  .dashboard-container {
+    margin-top: 3%;
+    margin-left: 10%;
+    margin-right: 10%;
+  }
+}
+
+/* Large Devices, Wide Screens */
+@media only screen and (min-width: 1200px) {
+}

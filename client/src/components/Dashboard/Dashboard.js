@@ -7,6 +7,8 @@ import RaisedButton from 'material-ui/RaisedButton';
 import Dialog from 'material-ui/Dialog';
 import TextField from 'material-ui/TextField';
 import axios from 'axios';
+import { getFullname } from '../../helpers';
+import './Dashboard.css';
 
 class Dashboard extends Component {
   constructor(props) {
@@ -23,16 +25,15 @@ class Dashboard extends Component {
     axios
       .post('http://localhost:8081/api/find', { id })
       .then(element => {
-        const user = element.data;
-        const firstName = user.firstName.charAt(0).toUpperCase() + user.firstName.slice(1);
-        const lastName = user.lastName.charAt(0).toUpperCase() + user.lastName.slice(1);
-        const fullname = `${firstName} ${lastName}`;
+        const { firstName, lastName, description } = element.data;
+        const id = element.data._id;
+        const fullname = getFullname(firstName, lastName);
         self.setState({
           firstName,
           lastName,
           fullname,
-          id: user._id,
-          description: user.description
+          id,
+          description
         });
       })
       .catch(err => {
@@ -70,7 +71,8 @@ class Dashboard extends Component {
       .then(element => {
         console.log('updated data: ', element.data);
         const { firstName, lastName, description } = element.data.updated;
-        this.setState({ firstName, lastName, description }, () => {
+        const fullname = getFullname(firstName, lastName);
+        this.setState({ firstName, lastName, description, fullname }, () => {
           console.log('setting dashboard state after upload');
         });
       })
@@ -92,7 +94,7 @@ class Dashboard extends Component {
     ];
 
     return (
-      <div>
+      <div className="dashboard-container">
         {this.props.loggedIn ? (
           <Card>
             <CardHeader
@@ -103,6 +105,7 @@ class Dashboard extends Component {
             <CardMedia overlay={<CardTitle title="Overlay title" subtitle="Overlay subtitle" />}>
               <img
                 src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRPIuXbqryk8aqUjByEMbosKWSHdm_V-cj8RfRGVXrBc_ilepXb"
+                className="city-image"
                 alt=""
               />
             </CardMedia>
@@ -122,6 +125,7 @@ class Dashboard extends Component {
               <Dialog title="Edit Profile" actions={actions} modal={true} open={this.state.modalOpen}>
                 <div>
                   <TextField
+                    className="input-form"
                     hintText="Enter your First Name"
                     floatingLabelText="First Name"
                     // value={this.state.firstName}
@@ -129,6 +133,7 @@ class Dashboard extends Component {
                   />
                   <br />
                   <TextField
+                    className="input-form"
                     hintText="Enter your Last Name"
                     floatingLabelText="Last Name"
                     //value={this.state.lastName}
@@ -136,6 +141,7 @@ class Dashboard extends Component {
                   />
                   <br />
                   <TextField
+                    className="input-form"
                     hintText="Enter your Description"
                     floatingLabelText="Description"
                     //value={this.state.description}
