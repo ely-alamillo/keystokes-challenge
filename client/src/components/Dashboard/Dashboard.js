@@ -68,8 +68,11 @@ class Dashboard extends Component {
     axios
       .post('http://localhost:8081/api/update', updates)
       .then(element => {
-        const { firstName, lastName, description } = element.data;
-        this.setState({ firstName, lastName, description });
+        console.log('updated data: ', element.data);
+        const { firstName, lastName, description } = element.data.updated;
+        this.setState({ firstName, lastName, description }, () => {
+          console.log('setting dashboard state after upload');
+        });
       })
       .catch(err => {
         console.log('error on update');
@@ -89,69 +92,77 @@ class Dashboard extends Component {
     ];
 
     return (
-      <Card>
-        <CardHeader
-          title={this.state.fullname}
-          subtitle="Software Engineer"
-          avatar="https://srkheadshotday.com/wp-content/uploads/Paolo_Cerruti_Headshot_16H5589_Crop32-760x507.jpg"
-        />
-        <CardMedia overlay={<CardTitle title="Overlay title" subtitle="Overlay subtitle" />}>
-          <img
-            src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRPIuXbqryk8aqUjByEMbosKWSHdm_V-cj8RfRGVXrBc_ilepXb"
-            alt=""
-          />
-        </CardMedia>
-        <CardTitle title="About Me" />
-        <CardText>{this.state.description ? this.state.description : 'Please edit your description'}</CardText>
-        <CardActions
-          style={{
-            display: 'flex',
-            flexDirection: 'row',
-            justifyContent: 'flex-end'
-          }}
-        >
-          {/* <FlatButton label="Edit Info" /> */}
-          {/* <FlatButton label="Action2" /> */}
-          <RaisedButton label="Edit Profile" onClick={this.openModal} />
-          <RaisedButton label="Upload Image" onClick={this.imageOpenModal} />
-          <Dialog title="Edit Profile" actions={actions} modal={true} open={this.state.modalOpen}>
-            <div>
-              <TextField
-                hintText="Enter your First Name"
-                floatingLabelText="First Name"
-                // value={this.state.firstName}
-                onChange={event => this.setState({ newFirstName: event.target.value })}
+      <div>
+        {this.props.loggedIn ? (
+          <Card>
+            <CardHeader
+              title={this.state.fullname}
+              subtitle="Software Engineer"
+              avatar="https://srkheadshotday.com/wp-content/uploads/Paolo_Cerruti_Headshot_16H5589_Crop32-760x507.jpg"
+            />
+            <CardMedia overlay={<CardTitle title="Overlay title" subtitle="Overlay subtitle" />}>
+              <img
+                src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRPIuXbqryk8aqUjByEMbosKWSHdm_V-cj8RfRGVXrBc_ilepXb"
+                alt=""
               />
-              <br />
-              <TextField
-                hintText="Enter your Last Name"
-                floatingLabelText="Last Name"
-                //value={this.state.lastName}
-                onChange={event => this.setState({ newLastName: event.target.value })}
-              />
-              <br />
-              <TextField
-                hintText="Enter your Description"
-                floatingLabelText="Description"
-                //value={this.state.description}
-                onChange={event => this.setState({ newDescription: event.target.value })}
-              />
-              <br />
-            </div>
-          </Dialog>
-          <Dialog title="Upload Image" actions={imageActions} modal={true} open={this.state.imageModalOpen}>
-            <div>
-              <br />
-              <form encType="multipart/form-data" onSubmit={this.uploadFile}>
-                {/* <label>Upload Image</label> */}
-                Upload Profile Image:
-                <input type="file" name="imgUploader" style={{ marginLeft: 15 }} />
-                <button type="submit">Upload File</button>
-              </form>
-            </div>
-          </Dialog>
-        </CardActions>
-      </Card>
+            </CardMedia>
+            <CardTitle title="About Me" />
+            <CardText>{this.state.description ? this.state.description : 'Please edit your description'}</CardText>
+            <CardActions
+              style={{
+                display: 'flex',
+                flexDirection: 'row',
+                justifyContent: 'flex-end'
+              }}
+            >
+              {/* <FlatButton label="Edit Info" /> */}
+              {/* <FlatButton label="Action2" /> */}
+              <RaisedButton label="Edit Profile" onClick={this.openModal} />
+              <RaisedButton label="Upload Image" onClick={this.imageOpenModal} />
+              <Dialog title="Edit Profile" actions={actions} modal={true} open={this.state.modalOpen}>
+                <div>
+                  <TextField
+                    hintText="Enter your First Name"
+                    floatingLabelText="First Name"
+                    // value={this.state.firstName}
+                    onChange={event => this.setState({ newFirstName: event.target.value })}
+                  />
+                  <br />
+                  <TextField
+                    hintText="Enter your Last Name"
+                    floatingLabelText="Last Name"
+                    //value={this.state.lastName}
+                    onChange={event => this.setState({ newLastName: event.target.value })}
+                  />
+                  <br />
+                  <TextField
+                    hintText="Enter your Description"
+                    floatingLabelText="Description"
+                    //value={this.state.description}
+                    onChange={event => this.setState({ newDescription: event.target.value })}
+                  />
+                  <br />
+                </div>
+              </Dialog>
+              <Dialog title="Upload Image" actions={imageActions} modal={true} open={this.state.imageModalOpen}>
+                <div>
+                  <br />
+                  <form encType="multipart/form-data" onSubmit={this.uploadFile}>
+                    {/* <label>Upload Image</label> */}
+                    Upload Profile Image:
+                    <input type="file" name="imgUploader" style={{ marginLeft: 15 }} />
+                    <button type="submit">Upload File</button>
+                  </form>
+                </div>
+              </Dialog>
+            </CardActions>
+          </Card>
+        ) : (
+          <div>
+            <h1>Please Login to access this page</h1>
+          </div>
+        )}
+      </div>
     );
   }
 }
