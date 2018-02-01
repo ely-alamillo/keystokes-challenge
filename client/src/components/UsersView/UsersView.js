@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
-import { Link } from 'react-router-dom';
 import User from '../Users/User';
 import axios from 'axios';
+import './UsersView.css';
 
 class UsersView extends Component {
   constructor(props) {
@@ -14,7 +14,6 @@ class UsersView extends Component {
     axios
       .get('http://localhost:8081/api/users')
       .then(element => {
-        console.log('element: ', element);
         this.setState({ users: element.data });
       })
       .catch(err => {
@@ -24,7 +23,10 @@ class UsersView extends Component {
 
   render() {
     return (
-      <div style={{ margin: 15 }}>
+      <div className="users-view-container">
+        <div style={{ margin: 15 }}>
+          <h1>All Users</h1>
+        </div>
         {this.state.users.map((user, i) => {
           return (
             <div style={{ margin: 15 }} key={i}>
